@@ -109,31 +109,13 @@ function oneHundred() {
 }
 
 //added the change event listener to each and assigned the value to modify the total cost
-$mainConf.on('change',
-  twoHundred
-);
-$jsFrameworks.on('change',
-  oneHundred,
-  conflictWith($express)
-);
-$jsLibs.on('change',
-  oneHundred,
-  conflictWith($node)
-);
-$express.on('change',
-  oneHundred,
-  conflictWith($jsFrameworks)
-);
-$node.on('change',
-  oneHundred,
-  conflictWith($jsLibs)
-);
-$buildTools.on('change',
-  oneHundred
-);
-$npm.on('change',
-  oneHundred
-);
+$mainConf.on('change', twoHundred);
+$jsFrameworks.on('change', oneHundred);
+$jsLibs.on('change', oneHundred);
+$express.on('change', oneHundred);
+$node.on('change', oneHundred);
+$buildTools.on('change', oneHundred);
+$npm.on('change', oneHundred);
 
 //Modify the h3 text to show the total cost
 function totalCost() {
@@ -145,19 +127,18 @@ $('#totalCostSection h3').text('$' + $totalCost);
 
 //create conditional loop that adds a class that strike through changes the color and disables the checkbox
 
-function conflictWith(element) {
-  if (this.checked) {
-    element.prop("disabled", true);
-    element.parent().addClass("conflict");
-    console.log('checked');
+function conflictWith($activity, $conflictedActivity) {
+  if ($activity.is(':checked')) {
+    $conflictedActivity.prop("disabled", true);
+    $conflictedActivity.parent().addClass("conflict");
   } else {
-    element.prop("disabled", false);
-    element.parent().removeClass("conflict");
-    console.log('Not Checked');
+    $conflictedActivity.prop("disabled", false);
+    $conflictedActivity.parent().removeClass("conflict");
   }
 }
 
-// $jsFrameworks.on('change', conflictWith($express)ge', );
-// $jsLibs.change(conflictWith($node));
-// $express.change(conflictWith($jsFrameworks));
-// $node.change(conflictWith($jsLibs));
+
+$jsFrameworks.on('change', () => conflictWith($jsFrameworks, $express));
+$jsLibs.on('change', () => conflictWith($jsLibs, $node));
+$express.on('change', () => conflictWith($express, $jsFrameworks));
+$node.on('change', () => conflictWith($node, $jsLibs));
