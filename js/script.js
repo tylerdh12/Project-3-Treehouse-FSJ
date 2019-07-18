@@ -1,5 +1,3 @@
-
-
 let $colorOption = $('#color option');
 
 ////////////////////////////////////////////
@@ -142,3 +140,104 @@ $jsFrameworks.on('change', () => conflictWith($jsFrameworks, $express));
 $jsLibs.on('change', () => conflictWith($jsLibs, $node));
 $express.on('change', () => conflictWith($express, $jsFrameworks));
 $node.on('change', () => conflictWith($node, $jsLibs));
+
+///////////////////////////////
+//    Credit card Section    //
+//---------------------------//
+//
+//
+//
+//
+//
+//
+
+// Just because we want them to make sure they select an option
+$('#payment option[value="select_method"]').attr('disabled', true);
+function defaultPayment() {
+  $('#payment option[value="credit card"]').attr('selected', true);
+  $('#credit-card').siblings().eq(3).hide();
+  $('#credit-card').siblings().eq(4).hide();
+}
+
+defaultPayment();
+
+$('#payment').change(function() {
+    if ($('#payment').val() === "credit card") {
+      $('#credit-card').show();
+      $('#credit-card').siblings().eq(3).hide();
+      $('#credit-card').siblings().eq(4).hide();
+    } else if ($('#payment').val() === "paypal") {
+      $('#credit-card').hide();
+      $('#credit-card').siblings().eq(3).show();
+      $('#credit-card').siblings().eq(4).hide();
+    }else if ($('#payment').val() === "bitcoin") {
+      $('#credit-card').hide();
+      $('#credit-card').siblings().eq(3).hide();
+      $('#credit-card').siblings().eq(4).show();
+
+    }
+});
+
+////////////////////////////////////
+//    Form Validation Section     //
+//--------------------------------//
+//
+//
+//
+//
+
+//Name Field can't be blank
+function isValidName(name) {
+  return /^[A-Z\-'\s]+$/i.test(name);
+}
+//Email field must be a validly formatted e-mail address (you don't have to check that it's a real e-mail address, just that it's formatted like one: dave@teamtreehouse.com for example.
+function isValidEmail(email) {
+  return /^[^@]+@[^@.]+\.[a-z]+$/i.test(email);
+}
+//User must select at least one checkbox under the "Register for Activities" section of the form.
+
+//If the selected payment option is "Credit Card," make sure the user has supplied a Credit Card number, a Zip Code, and a 3 number CVV value before the form can be submitted.
+//Make sure your validation is only validating Credit Card info if Credit Card is the selected payment method.
+
+  //Credit Card field should only accept a number between 13 and 16 digits.
+  function isValidCreditCard(cardNum) {
+    return /^[\d]{13}(?:[\d]{3})?$/.test(cardNum)
+  }
+  //The Zip Code field should accept a 5-digit number.
+  function isValidZip(zip) {
+    return /^\d{5}$/.test(zip);
+  }
+  //The CVV should only accept a number that is exactly 3 digits long.
+  function isValidCvv(cvv) {
+    return /^\d{3}$/.test(cvv);
+  }
+
+
+
+
+//used form validation workshop
+
+function showOrHideTip(show, element) {
+  // show element when show is true, hide when false
+  if (show) {
+    element.style.display = "inherit";
+  } else {
+    element.style.display = "none";
+  }
+}
+
+function createListener(validator) {
+  return e => {
+    const text = e.target.value;
+    const valid = validator(text);
+    const showTip = text !== "" && !valid;
+    const tooltip = e.target.nextElementSibling;
+    showOrHideTip(showTip, tooltip);
+  };
+}
+
+$('#name').on("input", createListener(isValidName));
+$('#mail').on("input", createListener(isValidEmail));
+$('#cc-num').on("input", createListener(isValidCreditCard));
+$('#zip').on("input", createListener(isValidZip));
+$('#cvv').on("input", createListener(isValidCvv));

@@ -106,6 +106,26 @@ input[type="radio"] {
 	display: inline-block;
 }
 
+span {
+  display: none;
+}
+
+input + span{
+  border: solid 1px transparent;
+  background-color: #f2dede;
+  color: #a94442;
+  padding: 12px;
+  text-align: center;
+  margin: auto;
+  margin-bottom: 20px;
+  border-radius: 6px;
+}
+}
+
+span:after {
+
+}
+
 button {
 	color: #fff;
 	padding: .55em 1.25em;
