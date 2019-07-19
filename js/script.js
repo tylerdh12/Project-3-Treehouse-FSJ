@@ -195,13 +195,15 @@ function isValidEmail(email) {
   return /^[^@]+@[^@.]+\.[a-z]+$/i.test(email);
 }
 //User must select at least one checkbox under the "Register for Activities" section of the form.
+let checkboxes = $('input[type="checkbox"]');
+
 
 //If the selected payment option is "Credit Card," make sure the user has supplied a Credit Card number, a Zip Code, and a 3 number CVV value before the form can be submitted.
 //Make sure your validation is only validating Credit Card info if Credit Card is the selected payment method.
 
   //Credit Card field should only accept a number between 13 and 16 digits.
   function isValidCreditCard(cardNum) {
-    return /^[\d]{13}(?:[\d]{3})?$/.test(cardNum)
+    return /^[\d]{13,16}$/.test(cardNum)
   }
   //The Zip Code field should accept a 5-digit number.
   function isValidZip(zip) {
@@ -217,7 +219,7 @@ function isValidEmail(email) {
 
 //used form validation workshop
 
-function showOrHideTip(show, element) {
+function showOrHideToolTip(show, element) {
   // show element when show is true, hide when false
   if (show) {
     element.style.display = "inherit";
@@ -232,7 +234,7 @@ function createListener(validator) {
     const valid = validator(text);
     const showTip = text !== "" && !valid;
     const tooltip = e.target.nextElementSibling;
-    showOrHideTip(showTip, tooltip);
+    showOrHideToolTip(showTip, tooltip);
   };
 }
 
@@ -241,3 +243,14 @@ $('#mail').on("input", createListener(isValidEmail));
 $('#cc-num').on("input", createListener(isValidCreditCard));
 $('#zip').on("input", createListener(isValidZip));
 $('#cvv').on("input", createListener(isValidCvv));
+
+//Is the form completed or missing any information?
+
+
+function formComplete() {
+  console.log('It worked');
+}
+
+//run formComplete()
+// submit form only if form completed returns true
+$('button').on('click', () => formComplete());

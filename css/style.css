@@ -17,7 +17,7 @@ button {
 body {
   font: 1em/1.5;
   color: rgba(6, 49, 68, 0.9);
-	background: #e6f0f5;
+	background: #f4f6f6;
 }
 
 header {
@@ -40,9 +40,9 @@ a {
 
 form {
 	padding: .875em 1.875em 1.875em;
-	background: #9bdcf8;
-	border: 2px solid rgba(8, 63, 87, 0.7);
-	border-radius: 4px;
+	background: #5fcf80;
+	border: 2px solid #f4f6f6;
+	border-radius: 25px;
 }
 
 fieldset,
@@ -83,6 +83,14 @@ label {
 input,
 select {
 	margin-bottom: 1.125em;
+  font-size: 1em;
+  font-weight: 500;
+  padding: .8em;
+  background: #e9f6fb;
+  border: 2px solid #b0d3e2;
+  border-radius: 11px;
+  /* box-shadow: 0px 0px 15px 1px #cecece; */
+  outline: none;
 }
 
 input {
@@ -91,13 +99,14 @@ input {
 	padding: .8em;
 	background: #e9f6fb;
 	border: 2px solid #b0d3e2;
-	border-radius: 4px;
+	border-radius: 11px;
+  /* box-shadow: 0px 0px 15px 1px #cecece; */
 	outline: none;
 }
 
 input:focus {
 	background: #fff;
-	border-color: #5e97b0;
+	border-color: #5fcf80;
 	transition: border-color .4s, background-color .4s;
 }
 
@@ -118,7 +127,7 @@ input + span{
   text-align: center;
   margin: auto;
   margin-bottom: 20px;
-  border-radius: 6px;
+  border-radius: 12px;
 }
 }
 
@@ -129,16 +138,16 @@ span:after {
 button {
 	color: #fff;
 	padding: .55em 1.25em;
-	background: #083f57;
+	background: #5fcf80;
 	margin: 1.25em 0 .5em;
 	cursor: pointer;
-	border: 2px solid black;
-	border-radius: 4px;
+	border: 2px solid #f4f6f6;
+	border-radius: 12px;
 	transition: all 0.5s;
 }
 
 button:hover {
-	background: #0887bd;
+	background: #32ad56;
 	border: 2px solid #f4f6f6;
 }
 
