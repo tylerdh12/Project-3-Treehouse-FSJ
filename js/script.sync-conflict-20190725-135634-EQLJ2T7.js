@@ -119,21 +119,11 @@ function conflictWith($activity, $conflictedActivity) {
   if ($activity.is(':checked')) {
     $conflictedActivity.prop("disabled", true);
     $conflictedActivity.parent().addClass("conflict");
-    $activity.parent().prev().show();
   } else {
     $conflictedActivity.prop("disabled", false);
     $conflictedActivity.parent().removeClass("conflict");
-    $activity.parent().prev().hide();
   }
 }
-
-//append conflicting activity error messages
-$jsFrameworks.parent().after('<div class="checkBoxConflicts">This activity conflicts with the Express Workshop</div>');
-$jsLibs.parent().after('<div class="checkBoxConflicts">This activity conflicts with the Node Workshop</div>');
-$express.parent().after('<div class="checkBoxConflicts">This activity conflicts with the Javascript Frameworks Workshop</div>');
-$node.parent().after('<div class="checkBoxConflicts">This activity conflicts with the Javascript Libraries Workshop</div>');
-
-
 
 // Event Listener for each Activity and its Confliction activity
 $jsFrameworks.on('change', () => conflictWith($jsFrameworks, $express));
@@ -154,6 +144,7 @@ $('#payment option[value="select_method"]').attr('disabled', true);
 
 // Sets Credit Card as DEFAULT option
 function defaultPayment() {
+  $creditCardPaymentRequired();
   $('#payment option[value="credit card"]').attr('selected', true);
   $('#credit-card').siblings().eq(3).hide();
   $('#credit-card').siblings().eq(4).hide();
@@ -162,24 +153,33 @@ function defaultPayment() {
 // run defaultPayment function
 defaultPayment();
 
-//changes state of payment methods when option is selected
-const $sibs = $('#credit-card').siblings();
+//Disables register button untill credit card is filled outline
+function $creditCardPaymentRequired() {
+  if ($('#payment option[value="credit card"]') === true) {
+    $('button').attr('disabled', true);
+  }
+}
 
+//changes state of payment methods when option is selected
 $('#payment').change(function() {
     if ($('#payment').val() === "credit card") {
+      $creditCardPaymentRequired();
       $('#credit-card').show();
-      $($sibs.eq(3), $sibs.eq(4)).hide();
+      $('#credit-card').siblings().eq(3).hide();
+      $('#credit-card').siblings().eq(4).hide();
     } else if ($('#payment').val() === "paypal") {
       $('#credit-card').hide();
-      $sibs.eq(3).show();
-      $sibs.eq(4).hide();
+      $('#credit-card').siblings().eq(3).show();
+      $('#credit-card').siblings().eq(4).hide();
     }else if ($('#payment').val() === "bitcoin") {
       $('#credit-card').hide();
-      $sibs.eq(3).hide();
-      $sibs.eq(4).show();
+      $('#credit-card').siblings().eq(3).hide();
+      $('#credit-card').siblings().eq(4).show();
 
     }
 });
+
+$()
 
 ////////////////////////////////////////////////////////////////////////////////
 //  Form Validation Section                                                   //
@@ -187,43 +187,39 @@ $('#payment').change(function() {
 //  functions to configure input validation                                   //
 ////////////////////////////////////////////////////////////////////////////////
 
-// Validation Values
-const vName = /^[A-Z\-'\s]+$/i;
-const vEmail = /^[^@]+@[^@.]+\.[a-z]$/i;
-const vCardNum = /^[\d]{13,16}$/;
-const vZip = /^\d{5}$/;
-const vCvv =/^\d{3}$/;
+// for( i = 0; i < inputs.length){
+// $('input').each().prop('required',true);
+// }
 
 //Name Field can't be blank
 function isValidName(name) {
-  return vName.test(name);
+  return /^[A-Z\-'\s]+$/i.test(name);
 }
+
 //Email field must be a validly formatted e-mail address (you don't have to check that it's a real e-mail address, just that it's formatted like one: dave@teamtreehouse.com for example.
 function isValidEmail(email) {
-  return vEmail.test(email);
-}
-//If the selected payment option is "Credit Card," make sure the user has supplied a Credit Card number, a Zip Code, and a 3 number CVV value before the form can be submitted.
-//Make sure your validation is only validating Credit Card info if Credit Card is the selected payment method.
-//Credit Card field should only accept a number between 13 and 16 digits.
-function isValidCreditCard(cardNum) {
-  return vCardNum.test(cardNum)
-}
-//The Zip Code field should accept a 5-digit number.
-function isValidZip(zip) {
-  return vZip.test(zip);
-}
-//The CVV should only accept a number that is exactly 3 digits long.
-function isValidCvv(cvv) {
-  return vCvv.test(cvv);
-}
-
-function validator(check, valid){
-  return valid.test(check);
-
+  return /^[^@]+@[^@.]+\.[a-z]+$/i.test(email);
 }
 
 //User must select at least one checkbox under the "Register for Activities" section of the form.
 let checkboxes = $('input[type="checkbox"]');
+
+
+//If the selected payment option is "Credit Card," make sure the user has supplied a Credit Card number, a Zip Code, and a 3 number CVV value before the form can be submitted.
+//Make sure your validation is only validating Credit Card info if Credit Card is the selected payment method.
+
+  //Credit Card field should only accept a number between 13 and 16 digits.
+  function isValidCreditCard(cardNum) {
+    return /^[\d]{13,16}$/.test(cardNum)
+  }
+  //The Zip Code field should accept a 5-digit number.
+  function isValidZip(zip) {
+    return /^\d{5}$/.test(zip);
+  }
+  //The CVV should only accept a number that is exactly 3 digits long.
+  function isValidCvv(cvv) {
+    return /^\d{3}$/.test(cvv);
+  }
 
 // Show or Hide the ToolTips
 function showOrHideToolTip(show, element) {
@@ -248,14 +244,14 @@ function createListener(validator) {
 
 // All Inputs connected here will have live error reporting due to the handler used
 // Event Listeners for checking the validations
-$('#name').on("input", createListener(isValidName));
-$('#mail').on("input", createListener(isValidEmail));
-$('#cc-num').on("input", createListener(isValidCreditCard));
-$('#zip').on("input", createListener(isValidZip));
-$('#cvv').on("input", createListener(isValidCvv));
+$('#name').on("keyup", createListener(isValidName));
+$('#mail').on("keyup", createListener(isValidEmail));
+$('#cc-num').on("focusout", createListener(isValidCreditCard));
+$('#zip').on("focusout", createListener(isValidZip));
+$('#cvv').on("focusout", createListener(isValidCvv));
 
-// Append Span / ToolTips for inputs then shows/hides based on input
-$('#name').after('<span>Please Enter Your First and Last Name</span>');
+// Append Span / ToolTips for inputs
+$('#name').after('<span>Please Enter Your Name</span>');
 $('#mail').after('<span>Must be a valid E-Mail Address \(name@example.com\)</span>');
 $('#other-title').after('<span>Other Job Role if Job NOT Listed Above</span>');
 $('#totalCostSection').before('<span>Please Select At Least <strong>ONE</strong> Activity</span>');
@@ -263,16 +259,8 @@ $('#cc-num').after('<span>Please Enter a valid Credit Card Number (13-16 Charact
 $('#zip').after('<span>Please enter a valid Zip Code (12345)</span>');
 $('#cvv').after('<span>Please enter the 3 digit CVV (On the back of your card)</span>');
 
-// $('button').on('click', function() {
-//   if (/*any form input invalid*/){
-//     event.preventDefault();
-//     //and show error reporting the issue
-//   } else if (/*all form inputs valid*/) {
-//     // submit form
-//   }
-// });
-
-// If any of the following validation errors exist, prevent the user from submitting the form:
-// Name field can't be blank.
-// User must select at least one checkbox under the "Register for Activities" section of the form.
-// If the selected payment option is "Credit Card," make sure the user has supplied a Credit Card number, a Zip Code, and a 3 number CVV value before the form can be submitted.
+// add an event listener to on the card number input to disable the button
+//  prevent default until validation has passed
+// $submit.on('click',function( event) { let number = /^\d{13,16}$/; let zip = /^\d{5}$/; let cvv = /^\d{3}$/; $ccNumber.before("<divid=numbererror></div>") ; $ccZip.before("<divid=ziperror></div>") ; $ccCvv.before("<divid=cvverror></div>");
+//run formComplete()
+// submit form only if form completed returns true
