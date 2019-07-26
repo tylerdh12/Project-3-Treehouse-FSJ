@@ -145,6 +145,12 @@ span:after {
 
 .checkBoxConflicts {
   display: none;
+  color: red;
+  background-color: limegreen;
+  padding: 10px;
+  margin: 0 auto;
+  border-radius: 20px;
+  text-align: center;
 }
 
 button {

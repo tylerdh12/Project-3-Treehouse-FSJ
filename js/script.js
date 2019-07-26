@@ -119,19 +119,19 @@ function conflictWith($activity, $conflictedActivity) {
   if ($activity.is(':checked')) {
     $conflictedActivity.prop("disabled", true);
     $conflictedActivity.parent().addClass("conflict");
-    $activity.parent().prev().show();
+    $activity.siblings().show();
   } else {
     $conflictedActivity.prop("disabled", false);
     $conflictedActivity.parent().removeClass("conflict");
-    $activity.parent().prev().hide();
+    $activity.siblings().hide();
   }
 }
 
 //append conflicting activity error messages
-$jsFrameworks.parent().after('<div class="checkBoxConflicts">This activity conflicts with the Express Workshop</div>');
-$jsLibs.parent().after('<div class="checkBoxConflicts">This activity conflicts with the Node Workshop</div>');
-$express.parent().after('<div class="checkBoxConflicts">This activity conflicts with the Javascript Frameworks Workshop</div>');
-$node.parent().after('<div class="checkBoxConflicts">This activity conflicts with the Javascript Libraries Workshop</div>');
+$jsFrameworks.parent().append('<div class="checkBoxConflicts">This activity conflicts with the Express Workshop</div>');
+$jsLibs.parent().append('<div class="checkBoxConflicts">This activity conflicts with the Node Workshop</div>');
+$express.parent().append('<div class="checkBoxConflicts">This activity conflicts with the Javascript Frameworks Workshop</div>');
+$node.parent().append('<div class="checkBoxConflicts">This activity conflicts with the Javascript Libraries Workshop</div>');
 
 
 
@@ -223,7 +223,17 @@ function validator(check, valid){
 }
 
 //User must select at least one checkbox under the "Register for Activities" section of the form.
-let checkboxes = $('input[type="checkbox"]');
+// $(document).ready(function() {
+//   let $checkboxes = $('input[type="checkbox"]');
+//   $checkboxes.change(function() {
+//     if($checkboxes.prop('checked')) {
+//       console.log('checked');
+//     }else {
+//       console.log('unchecked');
+//     }
+//   });
+// });
+
 
 // Show or Hide the ToolTips
 function showOrHideToolTip(show, element) {
@@ -251,8 +261,8 @@ function createListener(validator) {
 $('#name').on("input", createListener(isValidName));
 $('#mail').on("input", createListener(isValidEmail));
 $('#cc-num').on("input", createListener(isValidCreditCard));
-$('#zip').on("input", createListener(isValidZip));
-$('#cvv').on("input", createListener(isValidCvv));
+$('#zip').on("focusout", createListener(isValidZip));
+$('#cvv').on("focusout", createListener(isValidCvv));
 
 // Append Span / ToolTips for inputs then shows/hides based on input
 $('#name').after('<span>Please Enter Your First and Last Name</span>');
@@ -263,14 +273,14 @@ $('#cc-num').after('<span>Please Enter a valid Credit Card Number (13-16 Charact
 $('#zip').after('<span>Please enter a valid Zip Code (12345)</span>');
 $('#cvv').after('<span>Please enter the 3 digit CVV (On the back of your card)</span>');
 
-// $('button').on('click', function() {
-//   if (/*any form input invalid*/){
-//     event.preventDefault();
-//     //and show error reporting the issue
-//   } else if (/*all form inputs valid*/) {
-//     // submit form
-//   }
-// });
+$('button').on('click', function() {
+  // if (/*all form inputs valid*/){
+  // submit form
+  // } else if (/*any form inputs invalid*/) {
+  event.preventDefault();
+  // and show error reporting the issue
+  // }
+});
 
 // If any of the following validation errors exist, prevent the user from submitting the form:
 // Name field can't be blank.
