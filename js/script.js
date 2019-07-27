@@ -29,19 +29,15 @@ $('#title').change(function() {
   }
 });
 
-let $colorOption = $('#color option');
-const regex = /("?)(\w+\ )?(\w+\ )?(\w+\ \()?(\w+\ )+(\w*Puns\w*)(\ \w+\ )?(\w+\)?)("?)/;
-let  colorOption = $colorOption.eq().text();
-let $regExCheck = true;
-
-
 ////////////////////////////////////////////////////////////////////////////////
-//  T-Shirt Section                                                           //
+//  T-Shirt Color Section                                                     //
 //----------------------------------------------------------------------------//
 //  set value for the color drop down to $noneSelected                        //
-//                                                                            //
 //  based on the theme selected choose to show options with the .html() method//
 ////////////////////////////////////////////////////////////////////////////////
+
+let $colorOption = $('#color option');
+let  colorOption = $colorOption.eq().text();
 
 $('#colors-js-puns').hide();
 $('#design>option:eq(0)').attr('disabled', true);
@@ -64,7 +60,7 @@ $('#design').change(function(){
 //  Conditional loop for conflicting Activities                               //
 ////////////////////////////////////////////////////////////////////////////////
 
-// Assingment Activity checkboxes
+// Assingment of Activity checkboxes
 const $mainConf = $('input[name=all]');               // Main Conference — $200
 const $jsFrameworks = $('input[name=js-frameworks]'); // JavaScript Frameworks Workshop — Tuesday 9am-12pm, $100
 const $jsLibs = $('input[name=js-libs]');             // JavaScript Libraries Workshop — Tuesday 1pm-4pm, $100
@@ -78,23 +74,27 @@ let $totalCost = 0;
 let $totalCostSection = '<div id=totalCostSection><h3></h3></div>'
 $('.activities').append($totalCostSection);
 
-// function to add $200 to the total cost
+// function to +/- $200 to the total cost
 function twoHundred() {
   if (this.checked) {
+    $('fieldset.activities').addClass('isValid');
     $totalCost += 200;
     totalCost();
   } else {
+    $('fieldset.activities').addClass('notValid');
     $totalCost -= 200;
     totalCost();
   }
 }
 
-// function to add $100 to the total cost
+// function to +/- $100 to the total cost
 function oneHundred() {
   if (this.checked) {
+    $('fieldset.activities').addClass('isValid');
     $totalCost += 100;
     totalCost();
   } else {
+    $('fieldset.activities').addClass('notValid');
     $totalCost -= 100;
     totalCost();
   }
@@ -187,7 +187,7 @@ $('#payment').change(function() {
 //  functions to configure input validation                                   //
 ////////////////////////////////////////////////////////////////////////////////
 
-// Validation Values
+// Validation Values using RegEx
 const vName = /^[A-Z\-'\s]+$/i;
 const vEmail = /^[^@]+@[^@.]+\.[a-z]$/i;
 const vCardNum = /^[\d]{13,16}$/;
@@ -196,43 +196,70 @@ const vCvv =/^\d{3}$/;
 
 //Name Field can't be blank
 function isValidName(name) {
-  return vName.test(name);
+  if (name !== "" &&  vName.test(name)) {
+    $('#name').addClass('isValid');
+    $('#name').removeClass('notValid');
+    return vName.test(name);
+  } else {
+    $('#name').removeClass('isValid');
+    $('#name').addClass('notValid');
+  }
 }
 //Email field must be a validly formatted e-mail address (you don't have to check that it's a real e-mail address, just that it's formatted like one: dave@teamtreehouse.com for example.
 function isValidEmail(email) {
-  return vEmail.test(email);
+  if (email !== "" &&  vEmail.test(email)) {
+    $('#mail').addClass('isValid');
+    $('#mail').removeClass('notValid');
+    return vEmail.test(email);
+  } else {
+    $('#mail').removeClass('isValid');
+    $('#mail').addClass('notValid');
+  }
 }
 //If the selected payment option is "Credit Card," make sure the user has supplied a Credit Card number, a Zip Code, and a 3 number CVV value before the form can be submitted.
 //Make sure your validation is only validating Credit Card info if Credit Card is the selected payment method.
 //Credit Card field should only accept a number between 13 and 16 digits.
 function isValidCreditCard(cardNum) {
-  return vCardNum.test(cardNum)
+  if (cardNum !== "" &&  vCardNum.test(cardNum)) {
+    $('#cc-num').addClass('isValid');
+    $('#cc-num').removeClass('notValid');
+    return vCardNum.test(cardNum);
+  } else {
+    $('#cc-num').removeClass('isValid');
+    $('#cc-num').addClass('notValid');
+  }
 }
 //The Zip Code field should accept a 5-digit number.
 function isValidZip(zip) {
-  return vZip.test(zip);
+  if (zip !== "" &&  vZip.test(zip)) {
+    $('#zip').addClass('isValid');
+    $('#zip').removeClass('notValid');
+    return vZip.test(zip);
+  } else {
+    $('#zip').removeClass('isValid');
+    $('#zip').addClass('notValid');
+  }
 }
 //The CVV should only accept a number that is exactly 3 digits long.
 function isValidCvv(cvv) {
-  return vCvv.test(cvv);
+  if (cvv !== "" &&  vCvv.test(cvv)) {
+    $('#cvv').addClass('isValid');
+    $('#cvv').removeClass('notValid');
+    return vCvv.test(cvv);
+  } else {
+    $('#cvv').removeClass('isValid');
+    $('#cvv').addClass('notValid');
+  }
 }
 
-function validator(check, valid){
-  return valid.test(check);
 
-}
 
 //User must select at least one checkbox under the "Register for Activities" section of the form.
-// $(document).ready(function() {
-//   let $checkboxes = $('input[type="checkbox"]');
-//   $checkboxes.change(function() {
-//     if($checkboxes.prop('checked')) {
-//       console.log('checked');
-//     }else {
-//       console.log('unchecked');
-//     }
-//   });
-// });
+function isValidChkBox() {
+  if ($mainConf.checked() || $jsFrameworks.checked() || $jsLibs.checked() || $express.checked() || $node.checked() || $buildTools.checked() || $npm.checked()){
+
+  }
+}
 
 
 // Show or Hide the ToolTips
@@ -260,7 +287,7 @@ function createListener(validator) {
 // Event Listeners for checking the validations
 $('#name').on("input", createListener(isValidName));
 $('#mail').on("input", createListener(isValidEmail));
-$('#cc-num').on("input", createListener(isValidCreditCard));
+$('#cc-num').on("focusout", createListener(isValidCreditCard));
 $('#zip').on("focusout", createListener(isValidZip));
 $('#cvv').on("focusout", createListener(isValidCvv));
 
@@ -274,13 +301,24 @@ $('#zip').after('<span>Please enter a valid Zip Code (12345)</span>');
 $('#cvv').after('<span>Please enter the 3 digit CVV (On the back of your card)</span>');
 
 $('button').on('click', function() {
-  // if (/*all form inputs valid*/){
-  // submit form
-  // } else if (/*any form inputs invalid*/) {
-  event.preventDefault();
-  // and show error reporting the issue
-  // }
+  if ($('#payment').val() === "credit card"){
+    if ($('input#name').hasClass("isValid") && $('input#mail').hasClass("isValid") && $('fieldset.activities').hasClass('isValid') && $('input#cc-num').hasClass("isValid") && $('input#zip').hasClass("isValid") && $('input#cvv').hasClass("isValid")) {
+      event.preventDefault();
+    window.open("confirmation.html");
+
+    } else {
+      event.preventDefault();
+    }
+  } else if ($('#payment').val() === "paypal" || $('#payment').val() === "bitcoin") {
+    console.log($('#payment').val());
+    event.preventDefault();
+  } else {
+    console.log('there was an error with the Form');
+    event.preventDefault();
+  }
 });
+
+
 
 // If any of the following validation errors exist, prevent the user from submitting the form:
 // Name field can't be blank.
