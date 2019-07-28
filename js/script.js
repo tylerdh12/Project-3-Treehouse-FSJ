@@ -77,11 +77,9 @@ $('.activities').append($totalCostSection);
 // function to +/- $200 to the total cost
 function twoHundred() {
   if (this.checked) {
-    $('fieldset.activities').addClass('isValid');
     $totalCost += 200;
     totalCost();
   } else {
-    $('fieldset.activities').addClass('notValid');
     $totalCost -= 200;
     totalCost();
   }
@@ -90,11 +88,9 @@ function twoHundred() {
 // function to +/- $100 to the total cost
 function oneHundred() {
   if (this.checked) {
-    $('fieldset.activities').addClass('isValid');
     $totalCost += 100;
     totalCost();
   } else {
-    $('fieldset.activities').addClass('notValid');
     $totalCost -= 100;
     totalCost();
   }
@@ -127,7 +123,10 @@ function conflictWith($activity, $conflictedActivity) {
   }
 }
 
-//append conflicting activity error messages
+// append error to activities not selected
+$('fieldset.activities legend').append('<div class="activitiesNeeded">Please select at least 1 (one) activity to submit the form</div>');
+
+// append conflicting activity error messages
 $jsFrameworks.parent().append('<div class="checkBoxConflicts">This activity conflicts with the Express Workshop</div>');
 $jsLibs.parent().append('<div class="checkBoxConflicts">This activity conflicts with the Node Workshop</div>');
 $express.parent().append('<div class="checkBoxConflicts">This activity conflicts with the Javascript Frameworks Workshop</div>');
@@ -189,18 +188,19 @@ $('#payment').change(function() {
 
 // Validation Values using RegEx
 const vName = /^[A-Z\-'\s]+$/i;
-const vEmail = /^[^@]+@[^@.]+\.[a-z]$/i;
+const vEmail = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
 const vCardNum = /^[\d]{13,16}$/;
 const vZip = /^\d{5}$/;
 const vCvv =/^\d{3}$/;
 
-//Name Field can't be blank
+//Name Field validation
 function isValidName(name) {
   if (name !== "" &&  vName.test(name)) {
     $('#name').addClass('isValid');
     $('#name').removeClass('notValid');
     return vName.test(name);
   } else {
+    $('#name + span').show()
     $('#name').removeClass('isValid');
     $('#name').addClass('notValid');
   }
@@ -252,12 +252,24 @@ function isValidCvv(cvv) {
   }
 }
 
-
-
 //User must select at least one checkbox under the "Register for Activities" section of the form.
-function isValidChkBox() {
-  if ($mainConf.checked() || $jsFrameworks.checked() || $jsLibs.checked() || $express.checked() || $node.checked() || $buildTools.checked() || $npm.checked()){
+$mainConf.on('change', isValidChkBox);
+$jsFrameworks.on('change', isValidChkBox);
+$jsLibs.on('change', isValidChkBox);
+$express.on('change', isValidChkBox);
+$node.on('change', isValidChkBox);
+$buildTools.on('change', isValidChkBox);
+$npm.on('change', isValidChkBox);
 
+function isValidChkBox() {
+  if ($('input[name=all]').is(':checked') || $('input[name=js-frameworks]').is(':checked') || $('input[name=js-libs]').is(':checked') || $('input[name=express]').is(':checked') || $('input[name=node]').is(':checked') || $('input[name=build-tools]').is(':checked') || $('input[name=npm]').is(':checked')){
+    $('fieldset.activities').addClass('isValid');
+    $('fieldset.activities').removeClass('notValid');
+    $('.activitiesNeeded').hide();
+  } else {
+    $('fieldset.activities').removeClass('isValid');
+    $('fieldset.activities').addClass('notValid');
+    $('.activitiesNeeded').show();
   }
 }
 
@@ -287,9 +299,9 @@ function createListener(validator) {
 // Event Listeners for checking the validations
 $('#name').on("input", createListener(isValidName));
 $('#mail').on("input", createListener(isValidEmail));
-$('#cc-num').on("focusout", createListener(isValidCreditCard));
-$('#zip').on("focusout", createListener(isValidZip));
-$('#cvv').on("focusout", createListener(isValidCvv));
+$('#cc-num').on("input", createListener(isValidCreditCard));
+$('#zip').on("input", createListener(isValidZip));
+$('#cvv').on("input", createListener(isValidCvv));
 
 // Append Span / ToolTips for inputs then shows/hides based on input
 $('#name').after('<span>Please Enter Your First and Last Name</span>');
@@ -301,26 +313,32 @@ $('#zip').after('<span>Please enter a valid Zip Code (12345)</span>');
 $('#cvv').after('<span>Please enter the 3 digit CVV (On the back of your card)</span>');
 
 $('button').on('click', function() {
+  isValidChkBox();
   if ($('#payment').val() === "credit card"){
     if ($('input#name').hasClass("isValid") && $('input#mail').hasClass("isValid") && $('fieldset.activities').hasClass('isValid') && $('input#cc-num').hasClass("isValid") && $('input#zip').hasClass("isValid") && $('input#cvv').hasClass("isValid")) {
-      event.preventDefault();
-    window.open("confirmation.html");
+      window.open("confirmation.html");
+    } else {
 
+      event.preventDefault();
+    }
+  } else if ($('#payment').val() === "paypal") {
+    if ($('input#name').hasClass("isValid") && $('input#mail').hasClass("isValid") && $('fieldset.activities').hasClass('isValid')) {
+      window.open("https://www.paypal.com");
+      event.preventDefault();
     } else {
       event.preventDefault();
     }
-  } else if ($('#payment').val() === "paypal" || $('#payment').val() === "bitcoin") {
-    console.log($('#payment').val());
-    event.preventDefault();
-  } else {
-    console.log('there was an error with the Form');
-    event.preventDefault();
+  } else if ($('#payment').val() === "bitcoin") {
+    if ($('input#name').hasClass("isValid") && $('input#mail').hasClass("isValid") && $('fieldset.activities').hasClass('isValid')) {
+      window.open("https://bitcoin.org/");
+      event.preventDefault();
+    } else {
+      event.preventDefault();
+    }
   }
 });
 
 
 
-// If any of the following validation errors exist, prevent the user from submitting the form:
-// Name field can't be blank.
 // User must select at least one checkbox under the "Register for Activities" section of the form.
 // If the selected payment option is "Credit Card," make sure the user has supplied a Credit Card number, a Zip Code, and a 3 number CVV value before the form can be submitted.
