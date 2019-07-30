@@ -140,6 +140,18 @@ label + span{
   position: relative;
 }
 
+.emptyError {
+  border: solid 1px transparent;
+  background-color: #f2dede;
+  color: #a94442;
+  padding: 12px;
+  text-align: center;
+  margin: auto;
+  margin-bottom: 20px;
+  border-radius: 12px;
+  display: none;
+}
+
 .checkBoxConflicts {
   display: none;
   color: red;
