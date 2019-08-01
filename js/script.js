@@ -167,7 +167,8 @@ const $sibs = $('#credit-card').siblings();
 $('#payment').change(function() {
     if ($('#payment').val() === "credit card") {
       $('#credit-card').show();
-      $($sibs.eq(3), $sibs.eq(4)).hide();
+      $sibs.eq(3).hide();
+      $sibs.eq(4).hide();
     } else if ($('#payment').val() === "paypal") {
       $('#credit-card').hide();
       $sibs.eq(3).show();
@@ -192,7 +193,6 @@ const vEmail = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
 const vCardNum = /^[\d]{13,16}$/;
 const vZip = /^\d{5}$/;
 const vCvv =/^\d{3}$/;
-
 //Name Field validation
 function isValidName(name) {
   if (name !== "" &&  vName.test(name)) {
@@ -201,7 +201,6 @@ function isValidName(name) {
     $('#nameError').hide();
     return vName.test(name);
   } else if ($('#name').val() == ""){
-    $('#nameError').show();
     $('#name').addClass('notValid');
     $('#name').removeClass('isValid');
   } else {
@@ -211,6 +210,7 @@ function isValidName(name) {
     $('#name').removeClass('isValid');
   }
 }
+
 //Email field must be a validly formatted e-mail address (you don't have to check that it's a real e-mail address, just that it's formatted like one: dave@teamtreehouse.com for example.
 function isValidEmail(email) {
   if (email !== "" &&  vEmail.test(email)) {
@@ -219,7 +219,6 @@ function isValidEmail(email) {
     $('#mailError').hide();
     return vEmail.test(email);
   } else if ($('#mail').val() == ""){
-    $('#mailError').show();
     $('#mail').addClass('notValid');
     $('#mail').removeClass('isValid');
   } else {
@@ -238,7 +237,6 @@ function isValidCreditCard(cardNum) {
     $('#cnumError').hide();
     return vCardNum.test(cardNum);
   } else if ($('#cc-num').val() == ""){
-    $('#cnumError').show();
     $('#cc-num').addClass('notValid');
     $('#cc-num').removeClass('isValid');
   } else  {
@@ -255,7 +253,6 @@ function isValidZip(zip) {
     $('#zipError').hide();
     return vZip.test(zip);
   } else if ($('#zip').val() == ""){
-    $('#zipError').show();
     $('#zip').addClass('notValid');
     $('#zip').removeClass('isValid');
   } else {
@@ -272,7 +269,6 @@ function isValidCvv(cvv) {
     $('#cvvError').hide();
     return vCvv.test(cvv);
   } else if ($('#cvv').val() == ""){
-    $('#cvvError').show();
     $('#cvv').addClass('notValid');
     $('#cvv').removeClass('isValid');
   } else {
@@ -281,15 +277,6 @@ function isValidCvv(cvv) {
     $('#cvv').removeClass('isValid');
   }
 }
-
-//User must select at least one checkbox under the "Register for Activities" section of the form.
-$mainConf.on('change', isValidChkBox);
-$jsFrameworks.on('change', isValidChkBox);
-$jsLibs.on('change', isValidChkBox);
-$express.on('change', isValidChkBox);
-$node.on('change', isValidChkBox);
-$buildTools.on('change', isValidChkBox);
-$npm.on('change', isValidChkBox);
 
 function isValidChkBox() {
   if ($('input[name=all]').is(':checked') || $('input[name=js-frameworks]').is(':checked') || $('input[name=js-libs]').is(':checked') || $('input[name=express]').is(':checked') || $('input[name=node]').is(':checked') || $('input[name=build-tools]').is(':checked') || $('input[name=npm]').is(':checked')){
@@ -303,13 +290,14 @@ function isValidChkBox() {
   }
 }
 
-function showInValid() {
-  $('#name').o( createListener(isValidName));
-  $('#mail').on("input", createListener(isValidEmail));
-  $('#cc-num').on("input", createListener(isValidCreditCard));
-  $('#zip').on("input", createListener(isValidZip));
-  $('#cvv').on("input", createListener(isValidCvv));
-}
+//User must select at least one checkbox under the "Register for Activities" section of the form.
+$mainConf.on('change', isValidChkBox);
+$jsFrameworks.on('change', isValidChkBox);
+$jsLibs.on('change', isValidChkBox);
+$express.on('change', isValidChkBox);
+$node.on('change', isValidChkBox);
+$buildTools.on('change', isValidChkBox);
+$npm.on('change', isValidChkBox);
 
 // Show or Hide the ToolTips
 function showOrHideToolTip(show, element) {
@@ -340,6 +328,13 @@ $('#cc-num').on("input", createListener(isValidCreditCard));
 $('#zip').on("input", createListener(isValidZip));
 $('#cvv').on("input", createListener(isValidCvv));
 
+// this is a second error for the Credit card number to remind them not to leave it blank
+$('#name').after('<div id="nameError" class="emptyError">Please Do Not leave Blank</div>')
+$('#mail').after('<div id="mailError" class="emptyError">Please Do Not leave Blank</div>')
+$('#cc-num').after('<div id="cnumError" class="emptyError">Please Do Not leave Blank</div>')
+$('#zip').after('<div id="zipError" class="emptyError">Please Do Not leave Blank</div>')
+$('#cvv').after('<div id="cvvError" class="emptyError">Please Do Not leave Blank</div>')
+
 // Append Span / ToolTips for inputs then shows/hides based on input
 $('#name').after('<span>Please Enter Your Name</span>');
 $('#mail').after('<span>Must be a valid E-Mail Address \(name@example.com\)</span>');
@@ -349,39 +344,46 @@ $('#cc-num').after('<span>Please Enter a valid Credit Card Number (13-16 Charact
 $('#zip').after('<span>Please enter your Zip Code (12345)</span>');
 $('#cvv').after('<span>Please enter the 3 digit CVV (On the back of your card)</span>');
 
-// this is a second error for the Credit card number to remind them not to leave it blank
-$('#name').children().after('<div id="nameError" class="emptyError">Please Do Not leave Blank</div>')
-$('#mail').children().after('<div id="mailError" class="emptyError">Please Do Not leave Blank</div>')
-$('#cc-num').children().after('<div id="cnumError" class="emptyError">Please Do Not leave Blank</div>')
-$('#zip').children().after('<div id="zipError" class="emptyError">Please Do Not leave Blank</div>')
-$('#cvv').children().after('<div id="cvvError" class="emptyError">Please Do Not leave Blank</div>')
+function showError(element, elementError) {
+  if (element.val() == "") {
+  	elementError.show();
+  } else {
+    elementError.hide();
+  }
+}
 
-$('button').on('click', function() {
+function defaultErrors() {
+  showError($('#name'), $('#nameError'));
+  showError($('#mail'), $('#mailError'));
   isValidChkBox();
+}
+
+function creditCardErrors() {
+  showError($('#cc-num'), $('#cnumError'));
+  showError($('#zip'), $('#zipError'));
+  showError($('#cvv'), $('#cvvError'));
+}
+
+$('form').on('submit', function() {
+  defaultErrors();
   if ($('#payment').val() === "credit card"){
+    creditCardErrors();
     if ($('input#name').hasClass("isValid") && $('input#mail').hasClass("isValid") && $('fieldset.activities').hasClass('isValid') && $('input#cc-num').hasClass("isValid") && $('input#zip').hasClass("isValid") && $('input#cvv').hasClass("isValid")) {
-      window.open("confirmation.html");
     } else {
-      event.preventDefault();
-      showInValid();
+      event.preventDefault()
     }
   } else if ($('#payment').val() === "paypal") {
-    if ($('input#name').hasClass("isValid") && $('input#mail').hasClass("isValid") && $('fieldset.activities').hasClass('isValid')) {
-      window.open("https://www.paypal.com");
+    if ($('input#name').hasClass("isValid") && $('input#mail').hasClass("isValid") && $('fieldset.activities').hasClass('isValid')){
     } else {
       event.preventDefault();
-      showInValid();
     }
   } else if ($('#payment').val() === "bitcoin") {
-    if ($('input#name').hasClass("isValid") && $('input#mail').hasClass("isValid") && $('fieldset.activities').hasClass('isValid')) {
-      window.open("https://bitcoin.org/");
+    if ($('input#name').hasClass("isValid") && $('input#mail').hasClass("isValid") && $('fieldset.activities').hasClass('isValid')){
     } else {
       event.preventDefault();
-      showInValid();
     }
   }
 });
-
 
 
 // User must select at least one checkbox under the "Register for Activities" section of the form.
