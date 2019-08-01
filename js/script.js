@@ -344,6 +344,7 @@ $('#cc-num').after('<span>Please Enter a valid Credit Card Number (13-16 Charact
 $('#zip').after('<span>Please enter your Zip Code (12345)</span>');
 $('#cvv').after('<span>Please enter the 3 digit CVV (On the back of your card)</span>');
 
+// Secondary empty input error reporting functions below
 function showError(element, elementError) {
   if (element.val() == "") {
   	elementError.show();
@@ -364,6 +365,7 @@ function creditCardErrors() {
   showError($('#cvv'), $('#cvvError'));
 }
 
+// on submit check for errors and if so display else if valid inputs submit form
 $('form').on('submit', function() {
   defaultErrors();
   if ($('#payment').val() === "credit card"){
@@ -384,7 +386,3 @@ $('form').on('submit', function() {
     }
   }
 });
-
-
-// User must select at least one checkbox under the "Register for Activities" section of the form.
-// If the selected payment option is "Credit Card," make sure the user has supplied a Credit Card number, a Zip Code, and a 3 number CVV value before the form can be submitted.
