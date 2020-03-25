@@ -1,33 +1,35 @@
 /* =================================
+  Style Colors
+==================================== */
+/* =================================
   Base Element Styles
 ==================================== */
-
-@import url('https://fonts.googleapis.com/css?family=Nunito|Roboto+Mono');
-
+@import url("https://fonts.googleapis.com/css?family=Nunito|Roboto+Mono");
 * {
-  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
 }
 
 body,
 input,
 button {
-	font-family: 'Nunito', sans-serif;
+  font-family: "Nunito", sans-serif;
 }
 
 body {
   font: 1em/1.5;
   color: rgba(6, 49, 68, 0.9);
-	background: #f4f6f6;
+  background: #f4f6f6;
 }
 
 header {
-	text-align: center;
+  text-align: center;
 }
 
 h1 {
-	font-size: 2.5em;
-	text-shadow: 0 1px 0 rgba(255, 255, 255, 0.85);
-	margin: 0;
+  font-size: 2.5em;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.85);
+  margin: 0;
 }
 
 a {
@@ -37,55 +39,54 @@ a {
 /* =================================
   Form Element Styles
 ==================================== */
-
 form {
-	padding: .875em 1.875em 1.875em;
-	background: #5fcf80;
-	border: 2px solid #f4f6f6;
-	border-radius: 25px;
+  padding: 0.875em 1.875em 1.875em;
+  background: skyblue;
+  border: 2px solid #f4f6f6;
+  border-radius: 25px;
 }
 
 fieldset,
 legend,
 button {
-	padding: 0;
-	border: none;
+  padding: 0;
+  border: none;
 }
 
 fieldset {
-	margin-top: 1.5em;
+  margin-top: 1.5em;
 }
 
 legend,
 button {
-	font-size: 1.25em;
+  font-size: 1.3em;
 }
 
 legend {
-	font-weight: 500;
-	padding-top: .5em;
-	border-top: 2px solid rgba(8, 63, 87, 0.6);
-	margin-bottom: 1.125em;
+  font-weight: 800;
+  padding-bottom: 0.7em;
+  border-bottom: 2px solid rgba(8, 63, 87, 0.6);
+  margin-bottom: 1.125em;
 }
 
 input[type="text"],
 input[type="email"],
 legend {
-	width: 100%;
+  width: 100%;
 }
 
 label {
-	color: #000;
-	display: block;
-	margin-bottom: .5em;
+  color: #000;
+  display: block;
+  margin-bottom: 0.5em;
 }
 
 input,
 select {
-	margin-bottom: 1.125em;
+  margin-bottom: 1.125em;
   font-size: 1em;
   font-weight: 500;
-  padding: .8em;
+  padding: 0.8em;
   background: #e9f6fb;
   border: 2px solid #b0d3e2;
   border-radius: 11px;
@@ -94,28 +95,29 @@ select {
 }
 
 input {
-	font-size: 1em;
-	font-weight: 500;
-	padding: .8em;
-	background: #e9f6fb;
-	border: 2px solid #b0d3e2;
-	border-radius: 11px;
+  font-size: 1em;
+  font-weight: 500;
+  padding: 0.8em;
+  background: #e9f6fb;
+  border: 2px solid #b0d3e2;
+  border-radius: 11px;
   /* box-shadow: 0px 0px 15px 1px #cecece; */
-	outline: none;
+  outline: none;
 }
 
 input:focus {
-	background: #fff;
-	border-color: #5fcf80;
-	transition: border-color .4s, background-color .4s;
+  background: #fff;
+  border-color: skyblue;
+  -webkit-transition: border-color 0.4s, background-color 0.4s;
+  transition: border-color 0.4s, background-color 0.4s;
 }
 
 input[type="checkbox"],
 input[type="radio"] {
-	display: inline-block;
+  display: inline-block;
 }
 
-input + span{
+input + span {
   border: solid 1px transparent;
   background-color: #f2dede;
   color: #a94442;
@@ -127,7 +129,7 @@ input + span{
   display: none;
 }
 
-label + span{
+label + span {
   border: solid 1px transparent;
   background-color: #f2dede;
   color: #a94442;
@@ -155,7 +157,7 @@ label + span{
 .checkBoxConflicts {
   display: none;
   color: red;
-  background-color: limegreen;
+  background-color: skyblue;
   padding: 10px;
   margin: 0 auto;
   border-radius: 20px;
@@ -165,64 +167,63 @@ label + span{
 .activitiesNeeded {
   display: none;
   color: red;
-  background-color: limegreen;
+  background-color: skyblue;
   padding: 10px;
   margin: 0 auto;
   border-radius: 20px;
   text-align: center;
-  font-size: .75em;
+  font-size: 0.75em;
 }
 
 button {
-	color: #fff;
-	padding: .55em 1.25em;
-	background: #5fcf80;
-	margin: 1.25em 0 .5em;
-	cursor: pointer;
-	border: 2px solid #f4f6f6;
-	border-radius: 12px;
-	transition: all 0.5s;
+  color: #fff;
+  padding: 0.55em 1.25em;
+  background: skyblue;
+  margin: 1.25em 0 0.5em;
+  cursor: pointer;
+  border: 2px solid #f4f6f6;
+  border-radius: 12px;
+  -webkit-transition: all 0.5s;
+  transition: all 0.5s;
 }
 
 button:hover {
-	background: #32ad56;
-	border: 2px solid #f4f6f6;
+  background: #30aadc;
+  border: 2px solid #f4f6f6;
 }
 
 input,
 select,
 option {
-	font-family: 'roboto', sans-serif;
+  font-family: "roboto", sans-serif;
 }
 
 /* =================================
   Page Styles
 ==================================== */
-
 .container {
-	margin: auto;
-	max-width: 680px;
+  margin: auto;
+  max-width: 680px;
 }
 
 .shirt div {
-	float: left;
-	margin-right: .85em;
+  float: left;
+  margin-right: 0.85em;
 }
 
 .interests input {
-	margin-bottom: 0;
+  margin-bottom: 0;
 }
 
 .credit-card {
-	margin-top: 1.25em;
+  margin-top: 1.25em;
 }
 
 /* =================================
   Helper Classes
 ==================================== */
-
 .is-hidden {
-	display: none;
+  display: none;
 }
 
 .clearfix::after {
@@ -239,34 +240,33 @@ option {
 /* =================================
   Media Queries
 ==================================== */
-
 @media (min-width: 0) and (max-width: 679px) {
-	header {
-		padding: 2em 0;
-	}
-	button {
-		width: 100%;
-	}
+  header {
+    padding: 0.2em 0;
+  }
+  button {
+    width: 100%;
+  }
 }
 
 @media (min-width: 680px) {
-	header {
-		padding: 4.65em 0 2.5em;
-	}
-	.col {
-		float: left;
-	}
-	.col + .col {
-		margin-left: 2.5%;
-	}
-	.col-3 {
-		width: 23%;
-	}
-	.col-6 {
-		width: 49%;
-	}
-
-	label {
-		clear: both;
-	}
+  header {
+    padding: 1.5em 0 0 0;
+  }
+  .col {
+    float: left;
+  }
+  .col + .col {
+    margin-left: 2.5%;
+  }
+  .col-3 {
+    width: 23%;
+  }
+  .col-6 {
+    width: 49%;
+  }
+  label {
+    clear: both;
+  }
 }
+/*# sourceMappingURL=style.css.map */
