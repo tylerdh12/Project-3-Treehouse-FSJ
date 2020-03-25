@@ -1,0 +1,278 @@
+/* =================================
+  Style Colors
+==================================== */
+$primary-color: skyblue;
+$primary-color-hover: darken($primary-color, 20%);
+
+/* =================================
+  Base Element Styles
+==================================== */
+
+@import url("https://fonts.googleapis.com/css?family=Nunito|Roboto+Mono");
+
+* {
+  box-sizing: border-box;
+}
+
+body,
+input,
+button {
+  font-family: "Nunito", sans-serif;
+}
+
+body {
+  font: 1em/1.5;
+  color: rgba(6, 49, 68, 0.9);
+  background: #f4f6f6;
+}
+
+header {
+  text-align: center;
+}
+
+h1 {
+  font-size: 2.5em;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.85);
+  margin: 0;
+}
+
+a {
+  text-decoration: none;
+}
+
+/* =================================
+  Form Element Styles
+==================================== */
+
+form {
+  padding: 0.875em 1.875em 1.875em;
+  background: $primary-color;
+  border: 2px solid #f4f6f6;
+  border-radius: 25px;
+}
+
+fieldset,
+legend,
+button {
+  padding: 0;
+  border: none;
+}
+
+fieldset {
+  margin-top: 1.5em;
+}
+
+legend,
+button {
+  font-size: 1.3em;
+}
+
+legend {
+  font-weight: 800;
+  padding-bottom: 0.7em;
+  border-bottom: 2px solid rgba(8, 63, 87, 0.6);
+  margin-bottom: 1.125em;
+}
+
+input[type="text"],
+input[type="email"],
+legend {
+  width: 100%;
+}
+
+label {
+  color: #000;
+  display: block;
+  margin-bottom: 0.5em;
+}
+
+input,
+select {
+  margin-bottom: 1.125em;
+  font-size: 1em;
+  font-weight: 500;
+  padding: 0.8em;
+  background: #e9f6fb;
+  border: 2px solid #b0d3e2;
+  border-radius: 11px;
+  /* box-shadow: 0px 0px 15px 1px #cecece; */
+  outline: none;
+}
+
+input {
+  font-size: 1em;
+  font-weight: 500;
+  padding: 0.8em;
+  background: #e9f6fb;
+  border: 2px solid #b0d3e2;
+  border-radius: 11px;
+  /* box-shadow: 0px 0px 15px 1px #cecece; */
+  outline: none;
+}
+
+input:focus {
+  background: #fff;
+  border-color: $primary-color;
+  transition: border-color 0.4s, background-color 0.4s;
+}
+
+input[type="checkbox"],
+input[type="radio"] {
+  display: inline-block;
+}
+
+input + span {
+  border: solid 1px transparent;
+  background-color: #f2dede;
+  color: #a94442;
+  padding: 12px;
+  text-align: center;
+  margin: auto;
+  margin-bottom: 20px;
+  border-radius: 12px;
+  display: none;
+}
+
+label + span {
+  border: solid 1px transparent;
+  background-color: #f2dede;
+  color: #a94442;
+  padding: 12px;
+  text-align: center;
+  margin: auto;
+  margin-bottom: 20px;
+  border-radius: 12px;
+  display: none;
+  position: relative;
+}
+
+.emptyError {
+  border: solid 1px transparent;
+  background-color: #f2dede;
+  color: #a94442;
+  padding: 12px;
+  text-align: center;
+  margin: auto;
+  margin-bottom: 20px;
+  border-radius: 12px;
+  display: none;
+}
+
+.checkBoxConflicts {
+  display: none;
+  color: red;
+  background-color: $primary-color;
+  padding: 10px;
+  margin: 0 auto;
+  border-radius: 20px;
+  text-align: center;
+}
+
+.activitiesNeeded {
+  display: none;
+  color: red;
+  background-color: $primary-color;
+  padding: 10px;
+  margin: 0 auto;
+  border-radius: 20px;
+  text-align: center;
+  font-size: 0.75em;
+}
+
+button {
+  color: #fff;
+  padding: 0.55em 1.25em;
+  background: $primary-color;
+  margin: 1.25em 0 0.5em;
+  cursor: pointer;
+  border: 2px solid #f4f6f6;
+  border-radius: 12px;
+  transition: all 0.5s;
+}
+
+button:hover {
+  background: $primary-color-hover;
+  border: 2px solid #f4f6f6;
+}
+
+input,
+select,
+option {
+  font-family: "roboto", sans-serif;
+}
+
+/* =================================
+  Page Styles
+==================================== */
+
+.container {
+  margin: auto;
+  max-width: 680px;
+}
+
+.shirt div {
+  float: left;
+  margin-right: 0.85em;
+}
+
+.interests input {
+  margin-bottom: 0;
+}
+
+.credit-card {
+  margin-top: 1.25em;
+}
+
+/* =================================
+  Helper Classes
+==================================== */
+
+.is-hidden {
+  display: none;
+}
+
+.clearfix::after {
+  content: " ";
+  display: table;
+  clear: both;
+}
+
+.conflict {
+  text-decoration: line-through;
+  color: grey;
+}
+
+/* =================================
+  Media Queries
+==================================== */
+
+@media (min-width: 0) and (max-width: 679px) {
+  header {
+    padding: 0.2em 0;
+  }
+  button {
+    width: 100%;
+  }
+}
+
+@media (min-width: 680px) {
+  header {
+    padding: 1.5em 0 0 0;
+  }
+  .col {
+    float: left;
+  }
+  .col + .col {
+    margin-left: 2.5%;
+  }
+  .col-3 {
+    width: 23%;
+  }
+  .col-6 {
+    width: 49%;
+  }
+
+  label {
+    clear: both;
+  }
+}
